@@ -1,0 +1,12 @@
+{
+    "id": "gradido-humhub-module",
+    "name": "Gradido-humhub-module",
+    "description": "Connect Gradido Wallet with Humhub",
+    "keywords": [
+    ],
+    "version": "0.1",
+    "humhub": {
+        "minVersion": "1.2"
+    },
+    "screenshots": []
+}
