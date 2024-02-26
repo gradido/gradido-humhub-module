@@ -14,5 +14,5 @@ use yii\helpers\Url;
 
 class Module extends \humhub\components\Module
 {
-  
+    public $gradidoAddressPrefix = 'https://gdd.gradido.net/send/';
 }
