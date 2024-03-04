@@ -33,8 +33,15 @@ use yii\web\View;
     </div>
     <div class="card-body">
         <strong class="card-title"><?= Html::containerLink($user); ?></strong>
-        <?php if (!empty($user->displayNameSub)) : ?>
-            <div>Tata<?= $user->displayNameSub; ?></div>
+        <?php if (!empty($user->displayNameSub)) : 
+                $profile = $user->profile;
+                $module = Yii::$app->getModule('gradido-humhub-module');
+                if($profile->hasAttribute('gradido_address') && $profile->getAttribute('gradido_address')) :
+                    $gddAddress = $profile->getAttribute('gradido_address'); ?>
+                    <div><?= Html::a(Html::encode($gddAddress),  $module->gradidoAddressPrefix . $gddAddress, ['target' => '_blank']); ?></div>
+                <?php else: ?>
+                    <div><?= HTML::encode($user->displayNameSub); ?></div>
+                <?php endif; ?>
         <?php endif; ?>
         <?= PeopleDetails::widget([
             'user' => $user,
