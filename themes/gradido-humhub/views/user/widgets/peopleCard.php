@@ -7,6 +7,7 @@
 
 use humhub\libs\Html;
 use humhub\modules\user\models\User;
+use humhub\modules\user\models\ProfileField;
 use humhub\modules\user\widgets\Image;
 use humhub\modules\user\widgets\PeopleActionButtons;
 use humhub\modules\user\widgets\PeopleDetails;
@@ -37,8 +38,11 @@ use yii\web\View;
                 $profile = $user->profile;
                 $module = Yii::$app->getModule('gradido-humhub-module');
                 if($profile->hasAttribute('gradido_address') && $profile->getAttribute('gradido_address')) :
-                    $gddAddress = $profile->getAttribute('gradido_address'); ?>
-                    <div><?= Html::a(Html::encode($gddAddress),  $module->gradidoAddressPrefix . $gddAddress, ['target' => '_blank']); ?></div>
+                    $gddAddress = $profile->getAttribute('gradido_address'); 
+                    $gradidoAddressProfileField = ProfileField::find()->where(['internal_name' => 'gradido_address'])->one();
+                    $config = json_decode($gradidoAddressProfileField->field_type_config);
+                    ?>
+                    <div><?= Html::a(Html::encode($gddAddress),  $config->linkPrefix . $gddAddress, ['target' => '_blank']); ?></div>
                 <?php else: ?>
                     <div><?= HTML::encode($user->displayNameSub); ?></div>
                 <?php endif; ?>
