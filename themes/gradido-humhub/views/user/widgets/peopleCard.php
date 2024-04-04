@@ -34,19 +34,18 @@ use yii\web\View;
     </div>
     <div class="card-body">
         <strong class="card-title"><?= Html::containerLink($user); ?></strong>
-        <?php if (!empty($user->displayNameSub)) : 
-                $profile = $user->profile;
-                $module = Yii::$app->getModule('gradido-humhub-module');
-                if($profile->hasAttribute('gradido_address') && $profile->getAttribute('gradido_address')) :
-                    $gddAddress = $profile->getAttribute('gradido_address'); 
-                    $gradidoAddressProfileField = ProfileField::find()->where(['internal_name' => 'gradido_address'])->one();
-                    $config = json_decode($gradidoAddressProfileField->field_type_config);
-                    ?>
-                    <div><?= Html::a(Html::encode($gddAddress),  $config->linkPrefix . $gddAddress, ['target' => '_blank']); ?></div>
-                <?php else: ?>
-                    <div><?= HTML::encode($user->displayNameSub); ?></div>
-                <?php endif; ?>
-        <?php endif; ?>
+        <?php 
+            $profile = $user->profile;
+            $module = Yii::$app->getModule('gradido-humhub-module');
+            if($profile->hasAttribute('gradido_address') && $profile->getAttribute('gradido_address')) :
+                $gddAddress = $profile->getAttribute('gradido_address'); 
+                $gradidoAddressProfileField = ProfileField::find()->where(['internal_name' => 'gradido_address'])->one();
+                $config = json_decode($gradidoAddressProfileField->field_type_config);
+                ?>
+                <div><?= Html::a(Html::encode($gddAddress),  $config->linkPrefix . $gddAddress, ['target' => '_blank']); ?></div>
+            <?php elseif (!empty($user->displayNameSub)): ?>
+                <div><?= HTML::encode($user->displayNameSub); ?></div>
+            <?php endif; ?>
         <?= PeopleDetails::widget([
             'user' => $user,
             'template' => '<div class="card-details">{lines}</div>',
