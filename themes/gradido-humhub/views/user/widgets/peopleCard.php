@@ -39,10 +39,15 @@ use yii\web\View;
             $module = Yii::$app->getModule('gradido-humhub-module');
             if($profile->hasAttribute('gradido_address') && $profile->getAttribute('gradido_address')) :
                 $gddAddress = $profile->getAttribute('gradido_address'); 
+                $linkDisplayText = $gddAddress;
+                if($user->username && strlen($user->username) > 2) {
+                    $communityName = substr($gddAddress, 0, strrpos($gddAddress, '/'));
+                    $linkDisplayText = $communityName.'/'.$user->username;
+                }
                 $gradidoAddressProfileField = ProfileField::find()->where(['internal_name' => 'gradido_address'])->one();
                 $config = json_decode($gradidoAddressProfileField->field_type_config);
                 ?>
-                <div><?= Html::a(Html::encode($gddAddress),  $config->linkPrefix . $gddAddress, ['target' => '_blank']); ?></div>
+                <div><?= Html::a(Html::encode($linkDisplayText),  $config->linkPrefix . $gddAddress, ['target' => '_blank']); ?></div>
             <?php elseif (!empty($user->displayNameSub)): ?>
                 <div><?= HTML::encode($user->displayNameSub); ?></div>
             <?php endif; ?>
