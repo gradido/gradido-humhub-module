@@ -47,7 +47,7 @@ use yii\web\View;
                 $gradidoAddressProfileField = ProfileField::find()->where(['internal_name' => 'gradido_address'])->one();
                 $config = json_decode($gradidoAddressProfileField->field_type_config);
                 ?>
-                <div><?= Html::a(Html::encode($linkDisplayText),  $config->linkPrefix . $gddAddress, ['target' => '_blank']); ?></div>
+                <div><?= Html::a(Html::encode($linkDisplayText),  $config->linkPrefix . $gddAddress, ['target' => '_blank', 'style' => 'color:#1122CC;']); ?></div>
             <?php elseif (!empty($user->displayNameSub)): ?>
                 <div><?= HTML::encode($user->displayNameSub); ?></div>
             <?php endif; ?>
