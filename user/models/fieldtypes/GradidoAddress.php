@@ -29,7 +29,7 @@ class GradidoAddress extends Text
         return $textFieldRules;
     }   
 
-    public function getUserValue(User $user, $raw = true): string
+    public function getUserValue(User $user, $raw = true, bool $encode = true): string
     {
         $internalName = $this->profileField->internal_name;
         $value = $user->profile->$internalName;
