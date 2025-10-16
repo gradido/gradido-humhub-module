@@ -32,21 +32,16 @@ class GradidoAddress extends Text
     public function getUserValue(User $user, $raw = true, bool $encode = true): string
     {
         $internalName = $this->profileField->internal_name;
-        $value = $user->profile->$internalName;
+        $value = $user->profile->$internalName ?? '';
+        $rawValue = $raw ? 'true' : 'false';
+        $encodeValue = $encode ? 'true' : 'false';
 
-        return Html::encode($value);
-    }
-
-    public function getUserValueHtml(User $user): string
-    {
-        $internalName = $this->profileField->internal_name;
-        $value = $user->profile->$internalName;
-
-        if (!$raw && (in_array($this->validator, [self::VALIDATOR_EMAIL, self::VALIDATOR_URL]) || !empty($this->linkPrefix))) {
+        // if $encode is false, caller will call HTML::encode() on the result later and so disable HTML
+        if ((!$raw && (in_array($this->validator, [self::VALIDATOR_EMAIL, self::VALIDATOR_URL]) || !empty($this->linkPrefix))) && $encode) {
             $linkPrefix = ($this->validator === self::VALIDATOR_EMAIL) ? 'mailto:' : $this->linkPrefix;
             return Html::a(Html::encode($value), $linkPrefix . $value, ['target' => 'about:_blank']);
         }
 
-        return Html::encode($value);
+        return $encode ? Html::encode($value) : $value;
     }
 };
