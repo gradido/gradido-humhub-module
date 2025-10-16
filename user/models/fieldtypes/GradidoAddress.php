@@ -34,6 +34,14 @@ class GradidoAddress extends Text
         $internalName = $this->profileField->internal_name;
         $value = $user->profile->$internalName;
 
+        return Html::encode($value);
+    }
+
+    public function getUserValueHtml(User $user): string
+    {
+        $internalName = $this->profileField->internal_name;
+        $value = $user->profile->$internalName;
+
         if (!$raw && (in_array($this->validator, [self::VALIDATOR_EMAIL, self::VALIDATOR_URL]) || !empty($this->linkPrefix))) {
             $linkPrefix = ($this->validator === self::VALIDATOR_EMAIL) ? 'mailto:' : $this->linkPrefix;
             return Html::a(Html::encode($value), $linkPrefix . $value, ['target' => 'about:_blank']);
@@ -41,5 +49,4 @@ class GradidoAddress extends Text
 
         return Html::encode($value);
     }
-
 };
